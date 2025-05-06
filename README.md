@@ -66,27 +66,27 @@ pytest
 
 ## Project Structure
 
-├── .gitignore
-├── LICENSE
-├── README.md
-├── insurance
-    ├── __init__.py
-    ├── asgi.py
-    ├── settings.py
-    ├── urls.py
-    └── wsgi.py
-├── manage.py
-├── policies
-    ├── __init__.py
-    ├── admin.py
-    ├── apps.py
-    ├── migrations
-    │   ├── 0001_initial.py
-    │   └── __init__.py
-    ├── models.py
-    ├── serializers.py
-    ├── tests.py
-    ├── urls.py
-    └── views.py
-├── pytest.ini
+├── .gitignore  
+├── LICENSE  
+├── README.md  
+├── insurance  
+ ├── **init**.py  
+ ├── asgi.py  
+ ├── settings.py  
+ ├── urls.py  
+ └── wsgi.py  
+├── manage.py  
+├── policies  
+ ├── **init**.py  
+ ├── admin.py  
+ ├── apps.py  
+ ├── migrations  
+ │ ├── 0001_initial.py  
+ │ └── **init**.py  
+ ├── models.py  
+ ├── serializers.py  
+ ├── tests.py  
+ ├── urls.py  
+ └── views.py  
+├── pytest.ini  
 └── requirements.txt
