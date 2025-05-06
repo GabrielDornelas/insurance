@@ -56,3 +56,41 @@ class PolicyAPITests(TestCase):
         invalid_data['expiry_date'] = (date.today() - timedelta(days=1)).isoformat()
         response = self.client.post(reverse('policy-list'), invalid_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_create_policy_missing_required_fields(self):
+        data_without_name = self.policy_data.copy()
+        del data_without_name['customer_name']
+        response = self.client.post(reverse('policy-list'), data_without_name, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        data_without_type = self.policy_data.copy()
+        del data_without_type['policy_type']
+        response = self.client.post(reverse('policy-list'), data_without_type, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        data_without_expiry = self.policy_data.copy()
+        del data_without_expiry['expiry_date']
+        response = self.client.post(reverse('policy-list'), data_without_expiry, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_nonexistent_policy(self):
+        response = self.client.get(reverse('policy-detail', kwargs={'pk': 99999}))
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_update_nonexistent_policy(self):
+        response = self.client.put(
+            reverse('policy-detail', kwargs={'pk': 99999}),
+            self.policy_data,
+            format='json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_delete_nonexistent_policy(self):
+        response = self.client.delete(reverse('policy-detail', kwargs={'pk': 99999}))
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_invalid_policy_type(self):
+        invalid_data = self.policy_data.copy()
+        invalid_data['policy_type'] = 'invalid_type'
+        response = self.client.post(reverse('policy-list'), invalid_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
